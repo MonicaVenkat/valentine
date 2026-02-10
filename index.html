@@ -92,32 +92,17 @@
 
     <script>
         const noBtn = document.getElementById('noBtn');
-        let clickCount = 0;
 
         // --- Runaway Button Logic ---
         function moveButton() {
-            clickCount++;
-            
-            const currentTop = noBtn.offsetTop;
-            const currentLeft = noBtn.offsetLeft;
-            
-            if (clickCount === 1) {
-                // Move up ~3cm (approx 113px)
-                noBtn.style.top = (currentTop - 113) + 'px';
-                noBtn.style.left = currentLeft + 'px';
-            } else if (clickCount === 2) {
-                // Move down ~3cm
-                noBtn.style.top = (currentTop + 113) + 'px';
-            } else if (clickCount === 3) {
-                // Move right ~3cm
-                noBtn.style.left = (currentLeft + 113) + 'px';
-            } else if (clickCount === 4) {
-                // Remove from screen
-                noBtn.style.display = 'none';
-            }
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
         }
 
-        noBtn.addEventListener('click', moveButton);
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('touchstart', moveButton);
 
         // --- Floating Hearts Logic ---
         function createHeart() {
