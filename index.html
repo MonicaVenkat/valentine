@@ -87,7 +87,7 @@
 
     <div class="btn-container">
         <button id="yesBtn" onclick="alert('Yay! Best day ever! 🥰')">Yes</button>
-        <button id="noBtn">No</button>
+        <button id="noBtn" style="left: 180px;">No</button>
     </div>
 
     <script>
@@ -96,7 +96,7 @@
         // --- Runaway Button Logic ---
         function moveButton() {
             const btnRect = noBtn.getBoundingClientRect();
-            const minDistance = 100; // Minimum distance from current position
+            const minDistance = 50; // Minimum distance from current position
             
             let x, y, distance;
             do {
