@@ -58,6 +58,46 @@
             transition: 0.1s ease; /* Makes the jump look smoother */
         }
 
+        /* Popup styles */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .popup-box {
+            background: white;
+            padding: 40px 60px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: popIn 0.3s ease;
+        }
+
+        .popup-box h2 {
+            color: #ff4d6d;
+            margin: 0 0 10px 0;
+            font-size: 28px;
+        }
+
+        .popup-box p {
+            color: #666;
+            margin: 0;
+            font-size: 18px;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
         /* Heart Animation Styles */
         .heart {
             position: fixed;
@@ -86,12 +126,26 @@
     <h1>Will you be my Valentine? ❤️</h1>
 
     <div class="btn-container">
-        <button id="yesBtn" onclick="alert('Yay! Best day ever! 🥰')">Yes</button>
-        <button id="noBtn" style="left: 180px;">No</button>
+        <button id="yesBtn" onclick="showPopup()">Yes</button>
+        <button id="noBtn" style="left: 250px;">No</button>
     </div>
 
     <script>
         const noBtn = document.getElementById('noBtn');
+
+        // --- Popup Logic ---
+        function showPopup() {
+            const overlay = document.createElement('div');
+            overlay.className = 'popup-overlay';
+            overlay.innerHTML = `
+                <div class="popup-box">
+                    <h2>Great Choice! 🥰</h2>
+                    <p>You made my day!</p>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+            overlay.addEventListener('click', () => overlay.remove());
+        }
 
         // --- Runaway Button Logic ---
         function moveButton() {
