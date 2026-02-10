@@ -98,21 +98,19 @@
         function moveButton() {
             clickCount++;
             
+            const currentTop = noBtn.offsetTop;
+            const currentLeft = noBtn.offsetLeft;
+            
             if (clickCount === 1) {
-                // Move to top of page
-                noBtn.style.top = '20px';
-                noBtn.style.left = '50%';
-                noBtn.style.transform = 'translateX(-50%)';
+                // Move up ~3cm (approx 113px)
+                noBtn.style.top = (currentTop - 113) + 'px';
+                noBtn.style.left = currentLeft + 'px';
             } else if (clickCount === 2) {
-                // Move to bottom of page
-                noBtn.style.top = (window.innerHeight - noBtn.offsetHeight - 20) + 'px';
-                noBtn.style.left = '50%';
-                noBtn.style.transform = 'translateX(-50%)';
+                // Move down ~3cm
+                noBtn.style.top = (currentTop + 113) + 'px';
             } else if (clickCount === 3) {
-                // Move to right side of page
-                noBtn.style.top = '50%';
-                noBtn.style.left = (window.innerWidth - noBtn.offsetWidth - 20) + 'px';
-                noBtn.style.transform = 'translateY(-50%)';
+                // Move right ~3cm
+                noBtn.style.left = (currentLeft + 113) + 'px';
             } else if (clickCount === 4) {
                 // Remove from screen
                 noBtn.style.display = 'none';
