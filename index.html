@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Special Invitation ❤️</title>
+    <title>Love Invitation</title>
     <style>
-        /* General Layout */
         body {
             margin: 0;
             padding: 0;
@@ -15,24 +14,20 @@
             justify-content: center;
             height: 100vh;
             font-family: 'Arial', sans-serif;
-            background-color: #ffe6f2;
-            overflow: hidden;
-            text-align: center;
+            background-color: #ffe6f2; /* Soft pink background */
+            overflow: hidden; 
         }
 
         h1 { 
             color: #d63384; 
-            z-index: 10;
-            font-size: 2.5rem;
-            margin-bottom: 30px;
+            z-index: 10; /* Keeps text above hearts */
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
-        /* Container for buttons to keep them centered initially */
         .btn-container {
             position: relative;
-            width: 100%;
-            max-width: 400px;
-            height: 150px;
+            width: 300px;
+            height: 100px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -40,41 +35,39 @@
         }
 
         button {
-            padding: 15px 35px;
-            font-size: 20px;
+            padding: 15px 30px;
+            font-size: 18px;
             font-weight: bold;
             cursor: pointer;
             border-radius: 50px;
             border: none;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
         }
 
         #yesBtn {
             background-color: #ff4d6d;
             color: white;
             margin-right: 20px;
-            transition: transform 0.3s ease;
-        }
-
-        #yesBtn:hover {
-            transform: scale(1.1);
         }
 
         #noBtn {
             background-color: #ffffff;
             color: #ff4d6d;
             position: absolute; 
-            transition: 0.1s ease; /* Smooth jump */
+            left: 180px; /* Initial right offset */
+            transition: 0.1s ease; /* Makes the jump look smoother */
         }
 
-        /* Floating Heart Styling */
+        /* Heart Animation Styles */
         .heart {
             position: fixed;
             color: #ff4d6d;
+            font-size: 20px;
             user-select: none;
             pointer-events: none;
             z-index: 1;
-            animation: floatUp linear forwards;
+            animation: float Up 4s linear infinite;
         }
 
         @keyframes floatUp {
@@ -91,75 +84,50 @@
 </head>
 <body>
 
-    <div id="main-content">
-        <h1>Will you be my Valentine? ❤️</h1>
-        <div class="btn-container">
-            <button id="yesBtn">Yes</button>
-            <button id="noBtn">No</button>
-        </div>
+    <h1>Will you be my Valentine? ❤️</h1>
+
+    <div class="btn-container">
+        <button id="yesBtn" onclick="alert('Yay! Best day ever! 🥰')">Yes</button>
+        <button id="noBtn">No</button>
     </div>
 
     <script>
         const noBtn = document.getElementById('noBtn');
-        const yesBtn = document.getElementById('yesBtn');
-        const mainContent = document.getElementById('main-content');
 
-        // --- 1. RUNAWAY BUTTON LOGIC ---
+        // --- Runaway Button Logic ---
         function moveButton() {
-            // Ensure button stays within visible screen bounds
-            const maxX = window.innerWidth - noBtn.offsetWidth;
-            const maxY = window.innerHeight - noBtn.offsetHeight;
-            
-            const randomX = Math.floor(Math.random() * maxX);
-            const randomY = Math.floor(Math.random() * maxY);
-
-            noBtn.style.left = `${randomX}px`;
-            noBtn.style.top = `${randomY}px`;
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
         }
 
         noBtn.addEventListener('mouseover', moveButton);
-        noBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault(); // Prevents clicking on mobile
-            moveButton();
-        });
+        noBtn.addEventListener('touchstart', moveButton);
 
-        // --- 2. NOTIFICATION & SUCCESS LOGIC ---
-        yesBtn.addEventListener('click', () => {
-            // Replace the ID below with your Formspree ID
-            const formspreeId = "YOUR_FORMSPREE_ID_HERE"; 
-
-            // Send notification
-            fetch(`https://formspree.io/f/${formspreeId}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ answer: "YES! ❤️", date: new Date().toLocaleString() })
-            });
-
-            // Update UI to success message
-            mainContent.innerHTML = `
-                <h1 style="font-size: 3rem;">Yay! I knew it! 🥰</h1>
-                <p style="font-size: 1.5rem; color: #ff4d6d;">See you soon! ❤️</p>
-            `;
-        });
-
-        // --- 3. FLOATING HEARTS LOGIC ---
+        // --- Floating Hearts Logic ---
         function createHeart() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
             heart.innerHTML = '❤️';
             
+            // Random horizontal position
             heart.style.left = Math.random() * 100 + 'vw';
-            const size = Math.random() * 20 + 15 + 'px';
-            heart.style.fontSize = size;
             
-            const duration = Math.random() * 3 + 2; // Between 2-5 seconds
-            heart.style.animationDuration = duration + 's';
+            // Random size and animation duration
+            const size = Math.random() * 20 + 10 + 'px';
+            heart.style.fontSize = size;
+            heart.style.duration = Math.random() * 2 + 3 + 's';
             
             document.body.appendChild(heart);
 
-            setTimeout(() => { heart.remove(); }, duration * 1000);
+            // Remove heart from DOM after animation finishes to save memory
+            setTimeout(() => {
+                heart.remove();
+            }, 4000);
         }
 
+        // Generate a new heart every 300ms
         setInterval(createHeart, 300);
     </script>
 
