@@ -139,9 +139,21 @@
 
     <script>
         const noBtn = document.getElementById('noBtn');
+        let firstTimeYes = true;
 
         // --- Popup Logic ---
         function showPopup() {
+            if (firstTimeYes) {
+                firstTimeYes = false;
+                if (confirm("Yes ah, very sure ah da jay? apo seri click panu")) {
+                    openLovePopup();
+                }
+                return;
+            }
+            openLovePopup();
+        }
+
+        function openLovePopup() {
             const overlay = document.createElement('div');
             overlay.className = 'popup-overlay';
             overlay.innerHTML = `
