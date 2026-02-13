@@ -105,6 +105,38 @@
             100% { transform: scale(1); opacity: 1; }
         }
 
+        .confirm-box {
+            background: white;
+            padding: 30px 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: popIn 0.3s ease;
+        }
+
+        .confirm-box p {
+            color: #d63384;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0 0 25px 0;
+        }
+
+        .confirm-box button {
+            margin: 0 10px;
+            padding: 12px 30px;
+        }
+
+        .confirm-yes {
+            background-color: #ff4d6d;
+            color: white;
+        }
+
+        .confirm-no {
+            background-color: #ffffff;
+            color: #ff4d6d;
+            border: 2px solid #ff4d6d;
+        }
+
         /* Heart Animation Styles */
         .heart {
             position: fixed;
@@ -145,12 +177,33 @@
         function showPopup() {
             if (firstTimeYes) {
                 firstTimeYes = false;
-                if (confirm("Yes ah, very sure ah da jay? apo seri click panu")) {
-                    openLovePopup();
-                }
+                showConfirmPopup();
                 return;
             }
             openLovePopup();
+        }
+
+        function showConfirmPopup() {
+            const overlay = document.createElement('div');
+            overlay.className = 'popup-overlay';
+            overlay.id = 'confirmOverlay';
+            overlay.innerHTML = `
+                <div class="confirm-box">
+                    <p>Yes ah, very sure ah da jay?<br>apo seri click panu 😏</p>
+                    <button class="confirm-yes" onclick="confirmYes()">Yes</button>
+                    <button class="confirm-no" onclick="confirmNo()">No</button>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+        }
+
+        function confirmYes() {
+            document.getElementById('confirmOverlay').remove();
+            openLovePopup();
+        }
+
+        function confirmNo() {
+            document.getElementById('confirmOverlay').remove();
         }
 
         function openLovePopup() {
